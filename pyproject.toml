@@ -14,7 +14,9 @@ requires-python = ">=3.11"
 dependencies = [
     "heap-mapping >= 0.1.0",
     "multiset-key-dict >= 0.2.1",
-    "nice-colorsys >= 0.2.0"
+    "nice-colorsys >= 0.2.0",
+    "numpy",
+    "hsluv"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
