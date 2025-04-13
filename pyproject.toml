@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "glasbeyish"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
     { name = "Andrew Tapia", email = "andrew.tapia@uky.edu" }
 ]
@@ -14,7 +14,7 @@ requires-python = ">=3.11"
 dependencies = [
     "heap-mapping >= 0.1.0",
     "multiset-key-dict >= 0.2.1",
-    "nice-colorsys >= 0.1.0"
+    "nice-colorsys >= 0.2.0"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
