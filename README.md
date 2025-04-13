@@ -58,7 +58,7 @@ cm = ListedColormap([c.to_rgb() for c in glasbey(12, seed=485)])
 cm
 ```
 
-![The same twelve color colormap, created with seed 485](images/output_8_0.png)
+![The same twelve color colormap, created with seed 485](images/output_7_0.png)
 
 
 
