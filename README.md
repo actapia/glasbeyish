@@ -20,7 +20,7 @@ from glasbeyish import glasbey
 from matplotlib.colors import ListedColormap
 ```
 
-## Generate a palette with 2 colors
+### Generate a palette with 2 colors
 
 
 ```python
@@ -31,7 +31,7 @@ cm
 ![Two color colormap](images/output_2_1.png)
 
 
-## Generate a palette with 12 colors
+### Generate a palette with 12 colors
 
 
 ```python
@@ -42,7 +42,7 @@ cm
 ![Twelve color colormap](images/output_4_0.png)
 
 
-## Use a seed for reproducibility
+### Use a seed for reproducibility
 
 
 ```python
@@ -62,7 +62,7 @@ cm
 
 
 
-## Limit the colors that can be generated
+### Limit the colors that can be generated
 
 Here, we'll try to make a bluish color palette by discarding colors too far from
 blue. 
@@ -80,7 +80,7 @@ cm
 
 
 
-## Use a custom random color generator
+### Use a custom random color generator
 
 In this example, we'll generate random colors with only blue components in the
 RGB color space. `glasbey` expects the generated colors to be in the CIELUV
