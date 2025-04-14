@@ -48,6 +48,9 @@ def geom_schedule(init: Number, steps: int, mul: Number) -> Iterator[Number]:
         yield init
         init *= mul
 
+def euclidean_distance(a, b):
+    return np.linalg.norm(b - a)
+
 def glasbey_simulated_annealing(
         n: int,
         rng: Optional[np.random.Generator] = None,
@@ -55,6 +58,7 @@ def glasbey_simulated_annealing(
         schedule: Optional[Iterable[Number]] = None,
         steps: int = 10_000,
         random_color: Callable = random_luv,
+        color_dist: Callable = euclidean_distance,
         **random_kwargs
 ) -> tuple[list[luv], np.float64]:
     """Find a palette of distinct colors using simulated annealing.
@@ -73,6 +77,7 @@ def glasbey_simulated_annealing(
         schedule:     Schedule of temperatures to use for simulated annealing.
         steps (int):  Steps to take in simulated annealing optimization.
         random_color: Function to get a random color; first parameter is PRNG.
+        color_dist:   Function to get distance of two colors as numpy arrays.
 
     Returns:
         Generated palette and minimum pairwise distance among colors.
@@ -88,7 +93,7 @@ def glasbey_simulated_annealing(
     colors = np.array([random_color(**random_kwargs) for _ in range(n)])
     dists = MultisetKeyDict(mapping_type=MinMaxHeap)
     for (i, a), (j, b) in combinations(enumerate(colors), 2):
-        dists[[i, j]] = np.linalg.norm(a - b)
+        dists[[i, j]] = color_dist(a, b)
     for temperature in schedule:
         argmin = list(dists.min_value.distinct())
         #print(argmin)
@@ -101,7 +106,7 @@ def glasbey_simulated_annealing(
                 old_dists[[i, choice]] = dists[[i, choice]]
         for i, c in enumerate(colors):
             if i != choice:
-                dists[[i, choice]] = np.linalg.norm(new_color - c)
+                dists[[i, choice]] = color_dist(new_color, c)
         new_min = dists.min.priority
         if rng.random() <= min(1, np.exp((new_min - old_min)/temperature)):
             colors[choice] = new_color

@@ -103,3 +103,44 @@ cm
 
 ![Blue color map](images/output_12_0.png)
 
+## Use a custom color distance
+
+As an example, this code shows using a custom color distance to generate a
+palette for people with protanopia, a form of color blindness.
+
+**Disclaimer:** This has *not* been tested with color blind users and might not
+even correctly assess color differences as seen by protanopes&mdash;it's for
+demonstration purposes only!
+
+```python
+hpe = np.array([
+    [0.4002, 0.7076, -0.0808],
+    [-0.2263, 1.1653, 0.0457],
+    [0,      0,      0.9182]
+])
+hpe_inv = np.linalg.inv(hpe)
+lms = colorspace("lms", ["long", "medium", "short"])
+register_space(lms, *derived_rgb_functions(ciexyz, lms, lambda x: hpe_inv @ x, lambda x: hpe @ x))
+```
+
+
+```python
+# Protanopia matrix from https://ixora.io/projects/colorblindness/color-blindness-simulation-research/
+protan_matrix = np.array([
+    [0, 1.05118294, -0.05116099],
+    [0, 1,          0          ],
+    [0, 0,          1          ]
+])
+def protan(x):
+    return np.array(lms(*(protan_matrix @ cieluv(*x).to_lms())).to_cieluv())
+
+def protan_dist(a, b):
+    a = protan(a)
+    b = protan(b)
+    return np.linalg.norm(b - a)
+
+cm = ListedColormap([c.to_rgb().safe() for c in glasbey(8, seed=485, color_dist=protan_dist)])
+cm
+```
+
+![Possibly a color palette optimized for protanopia](images/output_16_0.png)
