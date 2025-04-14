@@ -5,7 +5,7 @@ Displays for Categorical Images" by Glasbey et al. for finding optimal distinct
 color palettes of a specified size.
 
 Unlike the [glasbey](https://github.com/lmcinnes/glasbey) library, this library
-implements the simulated annealing method described in the paper rather, than
+implements the simulated annealing method described in the paper, rather than
 the iterative method. The simulated annealing method can often give better color
 palettes at the expense of longer run times.
 
